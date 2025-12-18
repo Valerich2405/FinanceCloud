@@ -1,0 +1,86 @@
+﻿<Window x:Class="FinanceCloud.IncomeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Журнал доходів"
+        Height="500"
+        Width="850"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Форма -->
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="15" CornerRadius="6">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0 0 10 0">
+                    <TextBlock Text="Сума" FontWeight="SemiBold"/>
+                    <TextBox Name="AmountBox" Height="30"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="0 0 10 0">
+                    <TextBlock Text="Джерело доходу" FontWeight="SemiBold"/>
+                    <TextBox Name="SourceBox" Height="30"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Margin="0 0 10 0">
+                    <TextBlock Text="Опис" FontWeight="SemiBold"/>
+                    <TextBox Name="DescriptionBox" Height="30"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="3" Margin="0 0 10 0">
+                    <TextBlock Text="Дата" FontWeight="SemiBold"/>
+                    <DatePicker Name="DatePicker" Height="30"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="4" VerticalAlignment="Bottom">
+                    <Button Content="Додати"
+                            Width="110"
+                            Height="32"
+                            Click="AddBtn_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Таблиця -->
+        <DataGrid Grid.Row="1"
+                  Name="IncomeGrid"
+                  Margin="0 15 0 0"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserAddRows="False">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="*"/>
+                <DataGridTextColumn Header="Джерело" Binding="{Binding Source}" Width="*"/>
+                <DataGridTextColumn Header="Опис" Binding="{Binding Description}" Width="2*"/>
+                <DataGridTextColumn Header="Дата"
+                                    Binding="{Binding Date, StringFormat=dd.MM.yyyy}"
+                                    Width="*"/>
+
+                <DataGridTemplateColumn Header="Дії" Width="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Видалити"
+                                    Width="90"
+                                    Background="#E74C3C"
+                                    Foreground="White"
+                                    Tag="{Binding Id}"
+                                    Click="DeleteBtn_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
